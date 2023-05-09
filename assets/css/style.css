@@ -1,8 +1,7 @@
 /*paper effect*/
-body {
-    background-image: url("parchment.jpg");
+#page{
+    background-image: url("/assets/Images/parchment.jpg");
 }
-
 
 
 
