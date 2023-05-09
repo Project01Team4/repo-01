@@ -39,7 +39,8 @@ function startPage(){
         var goAdventure = document.createElement("button");
         goAdventure.textContent = "Begin your Adventure!"
         goAdventure.addEventListener("click", function(){
-            console.log("does this work")
+            var newHTML = './placehold.html'
+            window.location.replace(newHTML);
         })
 
         initialSelect.append(placeholderText, goBack, goAdventure);
@@ -48,10 +49,16 @@ function startPage(){
 
 startPage();
 
+// health bar and other bar go down thing: 
 
+// set the red bar into 50% full
+	var progress = document.getElementById("red-bar");
+	RPGUI.set_value(progress, 0.5);
 
 
 
 // random fetch bs using https://www.dnd5eapi.co/api/monsters?data="cr"&sortby=max or something like that. Add to monster cr groups arrays that change based on characters level within certain parameters later defined. Also need to grab image, health stat, and hit dice value.
 
 // using loop to show heart that will be changed to display: none based on the health percentage
+
+// https://image-charts.com/chart
