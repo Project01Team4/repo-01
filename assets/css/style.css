@@ -1,15 +1,57 @@
 /*paper effect*/
 #page{
-    background-image: url("/assets/Images/parchment.jpg");
+    background-image: url("./assets/Images/parchment.jpg");
+}
+
+#paper {
+    padding: 50px;
+}
+
+.rpgui-content {
+    display: flex; 
+    justify-content: center;
+  }
+
+#startButton {
+    width: 100%;
+}
+
+#startGame{
+  display: flex;
+  flex-flow: row wrap;
+  position: relative;
+  max-height: min-content;
+  justify-content: center;
+  margin: 20px;
 }
 
 
+.dialogueBox {
+  max-width: 500px;
+  flex-flow: row wrap;
+}
 
+.dialogueBtn {
+  display: flex;
+  flex-flow: row wrap;
+  max-width: 500px;
+}
+
+.fightorrestBtn {
+  display: block;
+}
 
 #startButton:hover {
     animation: tilt-n-move-shaking 0.25s infinite;
 }
-  
+
+.spotify{ 
+    display: flex;
+    flex-flow: row wrap;
+    position: relative;
+    justify-content: center;
+    margin: 25px; 
+}
 @keyframes tilt-n-move-shaking {
     0% { transform: translate(0, 0) rotate(0deg); }
     25% { transform: translate(5px, 5px) rotate(5deg); }
@@ -18,77 +60,6 @@
     100% { transform: translate(0, 0) rotate(0deg); }
   }
 
-  .rpgui-progress
-  {
-      height: 42px;
-      width: 100%;
-      margin-top: 5px;
-      margin-bottom: 5px;
-      position: relative;
-  }
-  
-  /* progress bar left edge */
-  .rpgui-progress-left-edge
-  {
-      position: absolute;
-      height: 42px;
-      width: 40px;
-      left: 0px;
-      background-image: url('/assets/Images/progress-bar-left.png');
-      background-size: 100% 100%;
-  }
-  
-  /* progress bar right edge */
-  .rpgui-progress-right-edge
-  {
-      position: absolute;
-      height: 42px;
-      width: 40px;
-      right: 0px;
-      background-image: url('/assets/Images/progress-bar-right.png');
-      background-size: 100% 100%;
-  }
-  
-  /* progress bar background track */
-  .rpgui-progress-track
-  {
-      position: absolute;
-      height: 42px;
-      left: 40px;
-      right: 40px;
-      background-image: url('/assets/Images/progress-bar-track.png');
-      background-repeat: repeat-x;
-      background-size: 36px 100%;
-  }
-  
-  
-  /* progress bar - the fill itself */
-  .rpgui-progress-fill
-  {
-      position: absolute;
-      top: 9px;
-      bottom: 8px;
-      left: 0;
-      width: 100%;
-      background-image: url('/assets/Images/progress.png');
-      background-repeat: repeat-x;
-      background-size: 36px 100%;
-  }
-  
-  /* progress bar - blue color */
-  .rpgui-progress-fill.blue
-  {
-      background-image: url('/assets/Images/progress-blue.png');
-  }
-  
-  /* progress bar - green color */
-  .rpgui-progress-fill.green
-  {
-      background-image: url('/assets/Images/progress-green.png');
-  }
-  
-  /* progress bar - red color */
-  .rpgui-progress-fill.red
-  {
-      background-image: url('/assets/Images/progress-red.png');
-  }
+
+ 
+
