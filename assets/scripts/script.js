@@ -1,13 +1,16 @@
 var player = {
     level: "1",
-    health: "10",
-    damage: "1",
+    health: "50",
+    damage: "5",
     armor: "0",
 };
 
+var difficulty = player.level / 4;
+
 var baseUrl = `https://www.dnd5eapi.co`
 var apiDndMon = `https://www.dnd5eapi.co/api/monsters?challenge_rating=${difficulty}`;
-var difficulty = player.level / 4;
+var playernameLS = JSON.parse(localStorage.getItem('player-name'));
+var playernameArray = [];
 
 fetch(apiDndMon)
     .then(response => response.json())
@@ -31,9 +34,12 @@ fetch(apiDndMon)
             .then(response => response.json())
             .then(data => {
                 var placeHolderImage = "https://i.kym-cdn.com/entries/icons/original/000/019/740/spoons.jpg";
+// monsterImageUrl is the url for the monster image
+// this will become background image
                 var monsterImageUrl = data.image ? baseUrl + data.image : placeHolderImage;
                 console.log(monsterImageUrl);
                 console.log(data);
+// fightMon is the object that contains monster information
                 var fightMon = {
                     name: data.name,
                     health: data.hit_points,
@@ -44,91 +50,66 @@ fetch(apiDndMon)
     });
     
 
-// var startSelect = ["Option 1",
-// "Option 2",
-// "Option 3"];
-
 var dialogueIteration = 0;
 
 var startBtn = document.getElementById("startButton");
-var playerName = JSON.parse(localStorage.getItem('player-name'));
 
-var introDialogue = [
-    {grogg: '',
-    player: ''},
-    {grogg: "Grogg: Hey, careful now! Stand up slowly.",
-    player: ">[Stand up]"},
-    {grogg: "Grogg: There you go. We wouldn't want you fainting and drowning, would we?",
-    player: ">Who are you?"},
-    {grogg: "Grogg: Oh? Me? Why, I'm Grogg, of course! Soggy Grogg, to be exact, but you can call me Grogg. All my friends do. Lovely to meet you, " + playerName + ".",
-    player: ">How do you know my name?"},
-    {grogg: "Grogg: I know that and a great deal of other things about you, young " + playerName + ". A witch of my years knows many things. Anyhow, I've just saved your life!",
-    player: ">Huh? I almost died?"},
-    {grogg: "Grogg: I found you floating face-down in my bog. Another minute and you would've been fertilizing my peat. But you're alive! All thanks to me. So now, I believe you owe me a debt.",
-    player: ">Are you going to eat me?"},
-    {grogg: "Grogg: What? Eat you? How could you possibly repay me if I ate you? Goodness, I know you're barely alive, but clean the mud from your ears and try to listen.",
-    player: ">Okay..."},
-    {grogg: "Grogg: No, young " + playerName + ", I need a different type of assistance.",
-    player: ">Ominous. Go on."},
-    {grogg: "Grogg: You see, my beloved bog has been overrun! Overtaken! Scourged by beasts and monsters! I would take care of them myself, but I'm afraid my strength isn't what it used to be...",
-    player: ">I see. And this is where I come in?"},
-    {grogg: "Grogg: Exactly! You learn quickly. In order to repay me for saving you, you're going to clear them out for me. Sound good?",
-    player: ">Do I have much of a choice in the matter?"},
-    {grogg: "Grogg: Well...'choice' is a subjective term. After each monster killed, you can choose to keep adventuring or choose to return and rest at my hut.",
-    player: ">But I can't leave. Is that right?"},
-    {grogg: "",
-    player: ""},
-];
+var groggDialogue = document.createElement("p");
+groggDialogue.className = "dialogueBox";
+var playerResponse = document.createElement("button");
+playerResponse.className = "dialogueBtn";
 
-// When player attacks it deals 1 damage to enemy
-// When defeating an enemy I get an option to increase on of these stats
-// Milestone "level" 5 adventuring gain a skill?
-var initialSelect = document.getElementById("initial-select")
+
+var initialSelect = document.getElementById("initial-select");
+
 
 // generates initial start screen using start button event listener
 function startPage(){
     initialSelect.innerHTML = '';
-    startBtn.textContent = "Start!";
+    startBtn.textContent = ">START!";
     startBtn.addEventListener("click", function(){
         beginAdventure()
     });
-    initialSelect.append(startBtn);
 };
 
 startPage();
 
 
-
+// prompts user to either go back to start or enter
 function beginAdventure(){
     initialSelect.innerHTML = '';
     startBtn.style.display = "none";
     var goBack = document.createElement("button");
-    goBack.textContent = "Return to start";
+    goBack.textContent = ">Return to start";
+    goBack.style.marginRight = "70px"
     goBack.addEventListener("click", function(){
         location.reload();
     });
 
     var goAdventure = document.createElement("button");
-    goAdventure.textContent = "I'm ready to go!";
+    goAdventure.textContent = ">I'm ready to go!";
     goAdventure.addEventListener("click", function(){
         setName();
     });
 
-    var placeholderText = document.createElement("p");
-    placeholderText.textContent = "Last chance to turn back. Adventuring isn't for the faint of heart, you know.";
+    var lastChance = document.createElement("p");
+    lastChance.className = "dialogueBox";
+    lastChance.textContent = "Last chance to turn back. Adventuring isn't for the faint of heart, you know.";
 
-    initialSelect.append(placeholderText, goBack, goAdventure);
-}
+    initialSelect.append(lastChance, goBack, goAdventure);
+};
 
+// allows user to set name
 function setName(){
     initialSelect.innerHTML = '';
     var enterName = document.createElement("input", "text");
     enterName.textContent = "Enter your name";
     var submitName = document.createElement("button");
-    submitName.textContent = "Submit!"
+    submitName.textContent = ">Submit!"
     submitName.addEventListener("click", function(){
         var nameVal = enterName.value;
         localStorage.setItem('player-name', JSON.stringify(nameVal));
+        playernameArray.push(nameVal);
 
         if (nameVal === undefined || nameVal === ''){
             alert("Come now, every adventurer has a name. Make one up if you have to!")
@@ -137,12 +118,37 @@ function setName(){
     });
     initialSelect.append(enterName, submitName);
     return;
-}
+};
 
 function gameIntro(){
+    var playerName = playernameArray.join('');
+    var introDialogue = [
+        {grogg: "Grogg: Hey, careful now! Stand up slowly.",
+        player: ">[STAND UP]"},
+        {grogg: "Grogg: There you go. We wouldn't want you fainting and drowning, would we?",
+        player: ">Who are you?"},
+        {grogg: "Grogg: Oh? Me? Why, I'm Grogg, of course! Soggy Grogg, to be exact, but you can call me Grogg. All my friends do. Lovely to meet you, " + playerName.toUpperCase() + ".",
+        player: ">How do you know my name?"},
+        {grogg: "Grogg: I know that and a great deal of other things about you, young " + playerName.toUpperCase() + ". A witch of my years knows many things. Anyhow, I've just saved your life!",
+        player: ">Huh? I almost died?"},
+        {grogg: "Grogg: I found you floating face-down in my bog. Another minute and you would've been fertilizing my peat. But you're alive! All thanks to me. So now, I believe you owe me a debt.",
+        player: ">Are you going to eat me?"},
+        {grogg: "Grogg: What? Eat you? How could you possibly repay me if I ate you? Goodness, I know you're barely alive, but clean the mud from your ears and try to listen.",
+        player: ">Okay..."},
+        {grogg: "Grogg: No, young " + playerName.toUpperCase() + ", I need a different type of assistance.",
+        player: ">Ominous. Go on."},
+        {grogg: "Grogg: You see, my beloved bog has been overrun! Overtaken! Scourged by beasts and monsters! I would take care of them myself, but I'm afraid my strength isn't what it used to be...",
+        player: ">I see. And this is where I come in?"},
+        {grogg: "Grogg: Exactly! You learn quickly. In order to repay me for saving you, you're going to clear them out for me. Sound good?",
+        player: ">Do I have much of a choice in the matter?"},
+        {grogg: "Grogg: Well...'choice' is a subjective term. After each monster killed, you can choose to keep adventuring or choose to return and rest at my hut.",
+        player: ">But I can't leave. Is that right?"},
+        {grogg: '',
+        player: ''}
+    ];
     initialSelect.innerHTML = '';
-    var groggDialogue = document.createElement("p");
-    var playerResponse = document.createElement("button");
+    groggDialogue.textContent = introDialogue[dialogueIteration].grogg;
+    playerResponse.textContent = introDialogue[dialogueIteration].player;
     initialSelect.append(groggDialogue, playerResponse);
     playerResponse.addEventListener("click", function(){
         initialSelect.innerHTML = '';
@@ -150,176 +156,122 @@ function gameIntro(){
         groggDialogue.textContent = introDialogue[dialogueIteration].grogg;
         playerResponse.textContent = introDialogue[dialogueIteration].player;
         initialSelect.append(groggDialogue, playerResponse);
+        if (dialogueIteration > 8){
+            letsGo();
+            return;
+        }
     });
-
 };
 
-// health bar and other bar go down thing: 
+function letsGo(){
+    groggDialogue.textContent = "Grogg: Not until your debt is paid, I'm afraid. It's not me, you see, it's the magical laws around debts and life's worth and...oh, nevermind. That's all terribly dull. Why don't we go back to my hut and you can head out in the morning, hm?";
+    playerResponse.textContent = ">Sure, a rest would be nice [RETURN TO GROGG'S HUT]"
+    
+    playerResponse.addEventListener("click", function(){
+        initialSelect.innerHTML = '';
+        var adventureMsg = document.createElement("p");
+        var letsgoBtn = document.createElement("button");
 
-// class name we will convert to special progress
-var _progress_class = "rpgui-progress";
+        adventureMsg.textContent = "After a full night's rest in Grogg's hut, you feel energized and ready to adventure..."
+        adventureMsg.className = "dialogueBox";
+        letsgoBtn.textContent = ">Alright, let's do this!"
+        letsgoBtn.addEventListener("click", function(){
+            fightorRest();
+        })
 
-// create a rpgui-progress from a given element.
-// note: element must be <input> of type "range" for this to work properly.
-RPGUI.__create_funcs["progress"] = function(element)
-{
-	RPGUI.add_class(element, _progress_class);
-	create_progress(element);
+        initialSelect.append(adventureMsg, letsgoBtn);
+    })
 };
 
-// set function to set value of the progress bar
-// value should be in range of 0 - 1.0
-// RPGUI.__set_funcs["progress"] = function(elem, value)
-// {
-// 	// get trackbar and progress bar elements
-// 	var track = RPGUI.get_child_with_class(elem, "rpgui-progress-track");
-// 	var progress = RPGUI.get_child_with_class(track, "rpgui-progress-fill");
-
-// 	// get the two edges
-// 	var edge_left = RPGUI.get_child_with_class(elem, "rpgui-progress-left-edge");
-// 	var edge_right = RPGUI.get_child_with_class(elem, "rpgui-progress-right-edge");
-
-// 	// set progress width
-// 	progress.style.left = "0px";
-// 	progress.style.width = (value * 100) + "%";
-// };
-
-// // init all progress elements on page load
-// RPGUI.on_load(function()
-// {
-// 	// get all the select elements we need to upgrade
-// 	var elems = document.getElementsByClassName(_progress_class).type='range'; // class name we will convert to special progress
-//     var _progress_class = "rpgui-progress";
+function fightorRest(){
+    initialSelect.innerHTML = '';
+    var fightorrestPrompt = document.createElement("p");
+    var fightBtn = document.createElement("button");
+    var restBtn = document.createElement("button");
+    fightorrestPrompt.className = "dialogueBox";
+    fightorrestPrompt.textContent = "Wandering through the bog, you encounter a(n) [MONSTER NAME]. What do you do?";
     
-//     // create a rpgui-progress from a given element.
-//     // note: element must be <input> of type "range" for this to work properly.
-//     RPGUI.__create_funcs["progress"] = function(element)
-//     {
-//         RPGUI.add_class(element, _progress_class);
-//         create_progress(element);
-//     };
+    fightBtn.textContent = ">Stay and fight--this will be easy!"
+    fightBtn.className = "fightorrestBtn";
+    fightBtn.addEventListener("click", function(){
+        console.log("Mama didn't raise a quitter");
+        // place for monster generator function
+    })
+    restBtn.textContent = ">Flee and rest--I need to heal."
+    fightBtn.className = "fightorrestBtn";
+    restBtn.addEventListener("click", function(){
+        console.log("Do I look like I wanna die rn?");
+        // place for heal function
+    })
+    initialSelect.append(fightorrestPrompt, fightBtn, restBtn);
+};
 
-    //     // set function to set value of the progress bar
-//     // value should be in range of 0 - 1.0
-//     RPGUI.__set_funcs["progress"] = function(elem, value)
-//     {
-//         // get trackbar and progress bar elements
-//         var track = RPGUI.get_child_with_class(elem, "rpgui-progress-track");
-//         var progress = RPGUI.get_child_with_class(track, "rpgui-progress-fill");
-    
-//         // get the two edges
-//         var edge_left = RPGUI.get_child_with_class(elem, "rpgui-progress-left-edge");
-//         var edge_right = RPGUI.get_child_with_class(elem, "rpgui-progress-right-edge");
-    
-//         // set progress width
-//         progress.style.left = "0px";
-//         progress.style.width = (value * 100) + "%";
-//     };
-    
-//     // init all progress elements on page load
-//     RPGUI.on_load(function()
-//     {
-//         // get all the select elements we need to upgrade
-//         var elems = document.getElementsByClassName(_progress_class);
-    
-//         // iterate the selects and upgrade them
-//         for (var i = 0; i < elems.length; ++i)
-//         {
-//             RPGUI.create(elems[i], "progress");
-//         }
-//     });
-    
-//     // upgrade a single "input" element to the beautiful progress class
-//     function create_progress(elem)
-//     {
-//         // create the containing div for the new progress
-//         progress_container = elem;
-    
-//         // insert the progress container
-//         RPGUI.insert_after(progress_container, elem);
-    
-//         // create progress parts (edges, track, thumb)
-    
-//         // track
-//         var track = RPGUI.create_element("div");
-//         RPGUI.add_class(track, "rpgui-progress-track");
-//         progress_container.appendChild(track);
-    
-//         // left edge
-//         var left_edge = RPGUI.create_element("div");
-//         RPGUI.add_class(left_edge, "rpgui-progress-left-edge");
-//         progress_container.appendChild(left_edge);
-    
-//         // right edge
-//         var right_edge = RPGUI.create_element("div");
-//         RPGUI.add_class(right_edge, "rpgui-progress-right-edge");
-//         progress_container.appendChild(right_edge);
-    
-//         // the progress itself
-//         var progress = RPGUI.create_element("div");
-//         RPGUI.add_class(progress, "rpgui-progress-fill");
-//         track.appendChild(progress);
-    
-//         // set color
-//         if (RPGUI.has_class(elem, "blue")) {progress.className += " blue";}
-//         if (RPGUI.has_class(elem, "red")) {progress.className += " red";}
-//         if (RPGUI.has_class(elem, "green")) {progress.className += " green";}
-    
-//         // set starting default value
-//         var starting_val = elem.dataset.value !== undefined ? parseFloat(elem.dataset.value) : 1;
-//         RPGUI.set_value(elem, starting_val);
-//     };
 
-// 	// iterate the selects and upgrade them
-// 	for (var i = 0; i < elems.length; ++i)
-// 	{
-// 		RPGUI.create(elems[i], "progress");
-// 	}
-// });
 
-// // upgrade a single "input" element to the beautiful progress class
-// function create_progress(elem)
-// {
-// 	// create the containing div for the new progress
-// 	progress_container = elem;
+// On adventure/fight button
+var encounter = document.createElement("div");
+encounter.style.background = `monsterImageUrl`;
+// fightMon is the variable that holds the object data
+// call on the monster object for the health and using the rpgui to show the health as a bar
+// call on monster strength (calculation most likely necessary) for damage to player
+// maybe add the doom damage css when taking damage
 
-// 	// insert the progress container
-// 	RPGUI.insert_after(progress_container, elem);
 
-// 	// create progress parts (edges, track, thumb)
 
-// 	// track
-// 	var track = RPGUI.create_element("div");
-// 	RPGUI.add_class(track, "rpgui-progress-track");
-// 	progress_container.appendChild(track);
+// When player attacks it deals 1 damage to enemy
+// When defeating an enemy I get an option to increase on of these stats
+// Milestone "level" 5 adventuring gain a skill?
+// player is the variable that holds the object data
+// need to add player information
+// need to add attack button
+var swordIcon = document.createElement("button");
+// swap button to div if we would like to use the icon for something else
+swordIcon.classList.add("rpgui-icon sword");
+document.body.appendChild(swordIcon);
 
-// 	// left edge
-// 	var left_edge = RPGUI.create_element("div");
-// 	RPGUI.add_class(left_edge, "rpgui-progress-left-edge");
-// 	progress_container.appendChild(left_edge);
+var swordIcon = document.createElement("div");
+// maybe button for running away?
+swordIcon.classList.add("rpgui-icon shield");
+document.body.appendChild(swordIcon);
 
-// 	// right edge
-// 	var right_edge = RPGUI.create_element("div");
-// 	RPGUI.add_class(right_edge, "rpgui-progress-right-edge");
-// 	progress_container.appendChild(right_edge);
+var swordIcon = document.createElement("div");
+swordIcon.classList.add("rpgui-icon exclamation");
+document.body.appendChild(swordIcon);
 
-// 	// the progress itself
-// 	var progress = RPGUI.create_element("div");
-// 	RPGUI.add_class(progress, "rpgui-progress-fill");
-// 	track.appendChild(progress);
+var healthBar = document.createElement("div");
+healthBar.id = "hp-bar";
+healthBar.setAttribute("data-value", $(healthBarVal));
+healthBar.classList.add("rpgui-progress red");
+document.body.appendChild(healthBar);
+// var healthBarVal = fightMon current health / `fightMon.health`;
 
-// 	// set color
-// 	if (RPGUI.has_class(elem, "blue")) {progress.className += " blue";}
-// 	if (RPGUI.has_class(elem, "red")) {progress.className += " red";}
-// 	if (RPGUI.has_class(elem, "green")) {progress.className += " green";}
+// one day we can add a new skill button
 
-// 	// set starting default value
-// 	var starting_val = elem.dataset.value !== undefined ? parseFloat(elem.dataset.value) : 1;
-// 	RPGUI.set_value(elem, starting_val);
-// }
+// upon defeat of the monster player receives option to raise parameters of one stat damage or armor
+// level: +1, health +4(?), 
+// damage or armor +5(?),
 
-// random fetch bs using https://www.dnd5eapi.co/api/monsters?data="cr"&sortby=max or something like that. Add to monster cr groups arrays that change based on characters level within certain parameters later defined. Also need to grab image, health stat, and hit dice value.
 
-// using loop to show heart that will be changed to display: none based on the health percentage
+
+
+// On rest button
+var rest = document.createElement("div");
+rest.textContent = "You sleep peacefully";
+// maybe add random encounters?
+// player health recovers by 15%(?)
+// On button float shows the value the player will heal (example: Heal: 2 Health)
+
+
+
+
+// Add character information sheet button (Maybe star stat format?)
+// Player Name
+// Player Level
+// Player Health
+// Player Attack Points
+// Player Defense Points
+
 
 // https://image-charts.com/chart
+
+// google image api for cartoon+fightmon.index
