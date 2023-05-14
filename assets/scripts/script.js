@@ -12,43 +12,41 @@ var apiDndMon = `https://www.dnd5eapi.co/api/monsters?challenge_rating=${difficu
 var playernameLS = JSON.parse(localStorage.getItem('player-name'));
 var playernameArray = [];
 
-fetch(apiDndMon)
-    .then(response => response.json())
-    .then(data => {
-        console.log(data.results);
-        var monsters = data.results.map(monster => {
-            console.log(monster);
-            return {
-                name: monster.name,
-                url: monster.url,
-                index: monster.index,
-            }
-        })
-        console.log(monsters);
-        var randomChoice = Math.floor(Math.random() * monsters.length);
-        var randomMonster = monsters[randomChoice];
-        console.log(randomMonster);
-
-        var randMonUrl = `https://www.dnd5eapi.co/api/monsters/${randomMonster.index}`;
-        fetch(randMonUrl)
-            .then(response => response.json())
-            .then(data => {
-                var placeHolderImage = "https://i.kym-cdn.com/entries/icons/original/000/019/740/spoons.jpg";
-                // monsterImageUrl is the url for the monster image
-                // this will become background image
-                var monsterImageUrl = data.image ? baseUrl + data.image : placeHolderImage;
-                console.log(monsterImageUrl);
-                console.log(data);
-                // fightMon is the object that contains monster information
-                var fightMon = {
-                    name: data.name,
-                    health: data.hit_points,
-                    damage: data.strength,
+function getRandomMonster(apiDndMon) {
+    return fetch(apiDndMon)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data.results);
+            var monsters = data.results.map(monster => {
+                return {
+                    name: monster.name,
+                    url: monster.url,
+                    index: monster.index,
                 }
-                console.log(fightMon)
             })
-    });
+            console.log(monsters);
+            var randomChoice = Math.floor(Math.random() * monsters.length);
+            var randomMonster = monsters[randomChoice];
+            console.log(randomMonster);
 
+            var randMonUrl = `https://www.dnd5eapi.co/api/monsters/${randomMonster.index}`;
+            return fetch(randMonUrl)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    // fightMon is the object that contains monster information
+                    var fightMon = {
+                        name: data.name,
+                        health: data.hit_points,
+                        damage: data.strength,
+                        image: data.image ? baseUrl + data.image : "https://i.kym-cdn.com/entries/icons/original/000/019/740/spoons.jpg",
+
+                    }
+                    console.log(fightMon)
+                    return fightMon;
+                })
+        });
+};
 
 var dialogueIteration = 0;
 
@@ -218,8 +216,23 @@ function fightorRest() {
     fightBtn.textContent = ">Stay and fight--this will be easy!"
     fightBtn.className = "fightorrestBtn";
     fightBtn.addEventListener("click", function () {
-        console.log("Mama didn't raise a quitter");
-        // place for monster generator function
+        getRandomMonster(apiDndMon).then(fightMon => {
+            initialSelect.innerHTML = '';
+            var monsterImageUrl = fightMon.image;
+            console.log(monsterImageUrl);
+            var fightMonInfo = document.createElement("div");
+            fightMonInfo.style.backgroundImage = `url(${monsterImageUrl})`;
+            fightMonInfo.style.backgroundSize = "cover";
+            fightMonInfo.style.width = "600px";
+            fightMonInfo.style.height = "400px";
+            initialSelect.appendChild(fightMonInfo);
+            console.log("Mama didn't raise a quitter");
+
+
+
+        });
+
+
     })
     restBtn.textContent = ">Flee and rest--I need to heal."
     fightBtn.className = "fightorrestBtn";
