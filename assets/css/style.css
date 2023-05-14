@@ -9,11 +9,19 @@
 
 .rpgui-content {
     display: flex; 
-    justify-content: center;
   }
+  
+  .rpgui-container {
+    width: 70%;
+    justify-content: center;
+}
 
 #startButton {
     width: 100%;
+}
+
+.sidebar {
+  width: 100%;
 }
 
 #startGame{
@@ -23,6 +31,7 @@
   max-height: min-content;
   justify-content: center;
   margin: 20px;
+  width: 100%;
 }
 
 
