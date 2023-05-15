@@ -46,7 +46,7 @@ function getRandomMonster(apiDndMon) {
                 })
         });
 
-    
+}
 
 var dialogueIteration = 0;
 
@@ -267,26 +267,6 @@ function fightorRest() {
     });
     restBtn.textContent = ">Flee and rest--I need to heal."
     restBtn.className = "fightorrestBtn";
-
-            var monsterImageUrl = fightMon.image;
-            console.log(monsterImageUrl);
-            var fightMonInfo = document.createElement("div");
-            fightMonInfo.style.backgroundImage = `url(${monsterImageUrl})`;
-            fightMonInfo.style.backgroundSize = "cover";
-            fightMonInfo.style.width = "600px";
-            fightMonInfo.style.height = "400px";
-            initialSelect.appendChild(fightMonInfo);
-            console.log("Mama didn't raise a quitter");
-
-
-
-        });
-
-
-    })
-    restBtn.textContent = ">Flee and rest--I need to heal."
-    fightBtn.className = "fightorrestBtn";
-
     restBtn.addEventListener("click", function () {
         console.log("Do I look like I wanna die rn?");
         // place for heal function
