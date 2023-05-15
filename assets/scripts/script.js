@@ -243,7 +243,7 @@ function fightorRest() {
     initialSelect.append(fightorrestPrompt, fightBtn, restBtn);
 };
 
-
+var angy = console.log(angy);
 
 // On adventure/fight button
 var encounter = document.createElement("div");
