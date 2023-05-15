@@ -45,7 +45,7 @@ function getRandomMonster(apiDndMon) {
                     return fightMon;
                 })
         });
-    };
+};
 
 var dialogueIteration = 0;
 
@@ -199,7 +199,7 @@ function letsGo() {
         letsgoBtn.addEventListener("click", function () {
             fightorRest();
         })
-        
+
         initialSelect.append(adventureMsg, letsgoBtn);
     })
 };
@@ -219,29 +219,33 @@ function fightorRest() {
             initialSelect.innerHTML = '';
             initialSelect.style.display = "flex";
             initialSelect.style.flexDirection = "column";
-                       
+            initialSelect.className
+
             var monsterImageUrl = fightMon.image;
             console.log(monsterImageUrl);
-            
-            var fightMonInfo = document.createElement("div");
-            fightMonInfo.style.backgroundImage = `url(${monsterImageUrl})`;
-            fightMonInfo.style.backgroundSize = "cover";
-            fightMonInfo.style.width = "50vw";
-            fightMonInfo.style.height = "50vh";
-            
-            console.log("Mama didn't raise a quitter");
-            
-            // var monHealthGUI =  document.createElement("div");
-            // monHealthGUI.id = "hp-bar";
-            // monHealthGUI.setAttribute("data-value", "1");
-            // monHealthGUI.classList.add("rpgui-progress", "red");
 
-            initialSelect.appendChild(fightMonInfo);
-            
+            var fightMonImage = document.createElement("div");
+            fightMonImage.style.backgroundImage = `url(${monsterImageUrl})`;
+            fightMonImage.style.backgroundSize = "cover";
+            fightMonImage.style.width = "50vw";
+            fightMonImage.style.height = "50vh";
+            fightMonImage.style.backgroundPosition = "center";
+
+            console.log("Mama didn't raise a quitter");
+
+            var monHealthGUI = document.createElement("div");
+            monHealthGUI.id = "hp-bar";
+            monHealthGUI.setAttribute("data-value", "1.0");
+            monHealthGUI.classList.add("rpgui-progress", "red");
+            monHealthGUI.innerHTML = `${fightMon.name}'s Health`;
+
+            initialSelect.appendChild(monHealthGUI);
+            initialSelect.appendChild(fightMonImage);
+
             var combatBox = document.createElement("div");
             combatBox.className = "rpgui-container framed-golden-2";
-            combatBox.style.width = "600px";
-            combatBox.style.height = "100px";
+            combatBox.style.width = "63vw";
+            combatBox.style.height = "18vh";
 
             var atkBox = document.createElement("button");
             var atkBoxIcon = document.createElement("div");
@@ -251,7 +255,7 @@ function fightorRest() {
             atkBox.style.height = "fit-content";
 
             atkBoxIcon.classList.add("rpgui-icon", "sword");
-            
+
             atkBox.appendChild(atkBoxIcon);
             atkBox.appendChild(document.createTextNode("Attack"))
             atkBox.addEventListener("click", function () {
@@ -260,7 +264,7 @@ function fightorRest() {
             });
             combatBox.appendChild(atkBox);
             document.querySelector('.rpgui-container').appendChild(combatBox);
- 
+
         });
     });
     restBtn.textContent = ">Flee and rest--I need to heal."

@@ -1,5 +1,5 @@
 /*paper effect*/
-#page{
+.page{
     background-image: url("./assets/Images/parchment.jpg");
 }
 
@@ -8,12 +8,13 @@
 }
 
 .rpgui-content {
-    display: flex; 
+    display: inline-block; 
   }
   
-  .rpgui-container {
+.rpgui-container {
     width: 70%;
     justify-content: center;
+    position: relative;
 }
 
 #startButton {
@@ -21,7 +22,8 @@
 }
 
 .sidebar {
-  width: 100%;
+  display: flex;
+  position: absolute;
 }
 
 #startGame{
@@ -53,6 +55,8 @@
 #startButton:hover {
     animation: tilt-n-move-shaking 0.25s infinite;
 }
+
+
 
 .spotify{ 
     display: flex;
