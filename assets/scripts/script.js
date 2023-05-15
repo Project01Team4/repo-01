@@ -237,7 +237,7 @@ function fightorRest() {
             monHealthGUI.id = "hp-bar";
             monHealthGUI.setAttribute("data-value", "1.0");
             monHealthGUI.classList.add("rpgui-progress", "red");
-            monHealthGUI.innerHTML = `${fightMon.name}'s Health`;
+            monHealthGUI.innerHTML = `${fightMon.name}'s Health <div class=" rpgui-progress-track"><div class=" rpgui-progress-fill red" style="left: 0px; width: 100%;"></div></div><div class=" rpgui-progress-left-edge"></div><div class=" rpgui-progress-right-edge"></div>`;
 
             initialSelect.appendChild(monHealthGUI);
             initialSelect.appendChild(fightMonImage);
@@ -297,24 +297,24 @@ encounter.style.background = `monsterImageUrl`;
 // need to add attack button
 var swordIcon = document.createElement("button");
 // swap button to div if we would like to use the icon for something else
-swordIcon.classList.add("rpgui-icon sword");
+swordIcon.classList.add("rpgui-icon", "sword");
 document.body.appendChild(swordIcon);
 
 var swordIcon = document.createElement("div");
 // maybe button for running away?
-swordIcon.classList.add("rpgui-icon shield");
+swordIcon.classList.add("rpgui-icon", "shield");
 document.body.appendChild(swordIcon);
 
 var swordIcon = document.createElement("div");
-swordIcon.classList.add("rpgui-icon exclamation");
+swordIcon.classList.add("rpgui-icon", "exclamation");
 document.body.appendChild(swordIcon);
 
-var healthBar = document.createElement("div");
-healthBar.id = "hp-bar";
-healthBar.setAttribute("data-value", $(healthBarVal));
-healthBar.classList.add("rpgui-progress red");
-document.body.appendChild(healthBar);
-// var healthBarVal = fightMon current health / `fightMon.health`;
+// var healthBar = document.createElement("div");
+// healthBar.id = "hp-bar";
+// healthBar.setAttribute("data-value", $(healthBarVal));
+// healthBar.classList.add("rpgui-progress", "red");
+// document.body.appendChild(healthBar);
+// // var healthBarVal = fightMon current health / `fightMon.health`;
 
 // one day we can add a new skill button
 
