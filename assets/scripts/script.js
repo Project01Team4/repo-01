@@ -6,7 +6,6 @@ var player = {
 };
 
 var difficulty = player.level / 4;
-
 var baseUrl = `https://www.dnd5eapi.co`
 var apiDndMon = `https://www.dnd5eapi.co/api/monsters?challenge_rating=${difficulty}`;
 var playernameLS = JSON.parse(localStorage.getItem('player-name'));
@@ -46,7 +45,7 @@ function getRandomMonster(apiDndMon) {
                     return fightMon;
                 })
         });
-};
+    };
 
 var dialogueIteration = 0;
 
@@ -200,7 +199,7 @@ function letsGo() {
         letsgoBtn.addEventListener("click", function () {
             fightorRest();
         })
-
+        
         initialSelect.append(adventureMsg, letsgoBtn);
     })
 };
@@ -233,14 +232,15 @@ function fightorRest() {
 
             var monsterImageUrl = fightMon.image;
             console.log(monsterImageUrl);
-
+            
             var fightMonInfo = document.createElement("div");
             fightMonInfo.style.backgroundImage = `url(${monsterImageUrl})`;
             fightMonInfo.style.backgroundSize = "cover";
-            fightMonInfo.style.width = "600px";
-            fightMonInfo.style.height = "400px";
+            fightMonInfo.style.width = "50vw";
+            fightMonInfo.style.height = "50vh";
+            
             console.log("Mama didn't raise a quitter");
-
+            
             initialSelect.appendChild(fightMonInfo)
 
             var combatBox = document.createElement("div");
@@ -249,14 +249,23 @@ function fightorRest() {
             combatBox.style.height = "100px";
 
             var atkBox = document.createElement("button");
-            atkBox.classList.add("rpgui-icon", "sword");
-            atkBox.textContent = "Attack";
+            var atkBoxIcon = document.createElement("div");
+            atkBox.id = "atkbtn";
+            atkBox.classList.add("rpgui-container", "rpgui-framed-golden-2");
+            atkBox.style.width = "fit-content";
+            atkBox.style.height = "fit-content";
+
+            atkBoxIcon.classList.add("rpgui-icon", "sword");
+            
+            atkBox.appendChild(atkBoxIcon);
+            atkBox.appendChild(document.createTextNode("Attack"))
             atkBox.addEventListener("click", function () {
                 console.log("attack button clicked");
                 // event listener click on sword icon moncurhealth - player.damage
             });
             combatBox.appendChild(atkBox);
             document.querySelector('.rpgui-container').appendChild(combatBox);
+ 
         });
     });
     restBtn.textContent = ">Flee and rest--I need to heal."
