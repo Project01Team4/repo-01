@@ -273,7 +273,7 @@ function fightorRest() {
 };
 
 
-
+// one more time
 
 // On adventure/fight button
 var encounter = document.createElement("div");
