@@ -6,7 +6,6 @@ var player = {
 };
 
 var difficulty = player.level / 4;
-
 var baseUrl = `https://www.dnd5eapi.co`
 var apiDndMon = `https://www.dnd5eapi.co/api/monsters?challenge_rating=${difficulty}`;
 var playernameLS = JSON.parse(localStorage.getItem('player-name'));
@@ -46,7 +45,8 @@ function getRandomMonster(apiDndMon) {
                     return fightMon;
                 })
         });
-};
+
+    
 
 var dialogueIteration = 0;
 
@@ -200,7 +200,7 @@ function letsGo() {
         letsgoBtn.addEventListener("click", function () {
             fightorRest();
         })
-
+        
         initialSelect.append(adventureMsg, letsgoBtn);
     })
 };
@@ -218,6 +218,56 @@ function fightorRest() {
     fightBtn.addEventListener("click", function () {
         getRandomMonster(apiDndMon).then(fightMon => {
             initialSelect.innerHTML = '';
+
+            initialSelect.style.display = "flex";
+            initialSelect.style.flexDirection = "column";
+                       
+            var monsterImageUrl = fightMon.image;
+            console.log(monsterImageUrl);
+            
+            var fightMonInfo = document.createElement("div");
+            fightMonInfo.style.backgroundImage = `url(${monsterImageUrl})`;
+            fightMonInfo.style.backgroundSize = "cover";
+            fightMonInfo.style.width = "50vw";
+            fightMonInfo.style.height = "50vh";
+            
+            console.log("Mama didn't raise a quitter");
+            
+            // var monHealthGUI =  document.createElement("div");
+            // monHealthGUI.id = "hp-bar";
+            // monHealthGUI.setAttribute("data-value", "1");
+            // monHealthGUI.classList.add("rpgui-progress", "red");
+
+            initialSelect.appendChild(fightMonInfo);
+            
+            var combatBox = document.createElement("div");
+            combatBox.className = "rpgui-container framed-golden-2";
+            combatBox.style.width = "600px";
+            combatBox.style.height = "100px";
+
+            var atkBox = document.createElement("button");
+            var atkBoxIcon = document.createElement("div");
+            atkBox.id = "atkbtn";
+            atkBox.classList.add("rpgui-container", "rpgui-framed-golden-2");
+            atkBox.style.width = "fit-content";
+            atkBox.style.height = "fit-content";
+
+            atkBoxIcon.classList.add("rpgui-icon", "sword");
+            
+            atkBox.appendChild(atkBoxIcon);
+            atkBox.appendChild(document.createTextNode("Attack"))
+            atkBox.addEventListener("click", function () {
+                console.log("attack button clicked");
+                // event listener click on sword icon moncurhealth - player.damage
+            });
+            combatBox.appendChild(atkBox);
+            document.querySelector('.rpgui-container').appendChild(combatBox);
+ 
+        });
+    });
+    restBtn.textContent = ">Flee and rest--I need to heal."
+    restBtn.className = "fightorrestBtn";
+
             var monsterImageUrl = fightMon.image;
             console.log(monsterImageUrl);
             var fightMonInfo = document.createElement("div");
@@ -236,12 +286,14 @@ function fightorRest() {
     })
     restBtn.textContent = ">Flee and rest--I need to heal."
     fightBtn.className = "fightorrestBtn";
+
     restBtn.addEventListener("click", function () {
         console.log("Do I look like I wanna die rn?");
         // place for heal function
     })
     initialSelect.append(fightorrestPrompt, fightBtn, restBtn);
 };
+
 
 
 
