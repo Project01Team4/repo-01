@@ -219,17 +219,7 @@ function fightorRest() {
             initialSelect.innerHTML = '';
             initialSelect.style.display = "flex";
             initialSelect.style.flexDirection = "column";
-            // var monsterHealth = fightmon.health;
-            // var monCurHealth = function () {
-
-            // };
-            // var monHealthGUI =  document.createElement("div");
-            // healthBar.id = "hp-bar";
-            // healthBar.setAttribute("data-value", $(healthBarVal));
-            // healthBar.classList.add("rpgui-progress red");
-            // document.body.appendChild(healthBar);
-            // var healthBarVal = monCurHealth / monsterHealth;
-
+                       
             var monsterImageUrl = fightMon.image;
             console.log(monsterImageUrl);
             
@@ -241,8 +231,13 @@ function fightorRest() {
             
             console.log("Mama didn't raise a quitter");
             
-            initialSelect.appendChild(fightMonInfo)
+            // var monHealthGUI =  document.createElement("div");
+            // monHealthGUI.id = "hp-bar";
+            // monHealthGUI.setAttribute("data-value", "1");
+            // monHealthGUI.classList.add("rpgui-progress", "red");
 
+            initialSelect.appendChild(fightMonInfo);
+            
             var combatBox = document.createElement("div");
             combatBox.className = "rpgui-container framed-golden-2";
             combatBox.style.width = "600px";
