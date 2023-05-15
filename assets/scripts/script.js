@@ -45,8 +45,7 @@ function getRandomMonster(apiDndMon) {
                     return fightMon;
                 })
         });
-
-}
+};
 
 var dialogueIteration = 0;
 
@@ -54,7 +53,6 @@ var startBtn = document.getElementById("startButton");
 
 var groggDialogue = document.createElement("p");
 groggDialogue.className = "dialogueBox";
-var dialogueDiv = document.getElementById("dialogue");
 var playerResponse = document.createElement("button");
 playerResponse.className = "dialogueBtn";
 
@@ -169,18 +167,17 @@ function gameIntro() {
             player: ''
         }
     ];
-    initialSelect.style.display = "none";
-    dialogueDiv.style.display = "flex";
+    initialSelect.innerHTML = '';
     groggDialogue.textContent = introDialogue[dialogueIteration].grogg;
     playerResponse.textContent = introDialogue[dialogueIteration].player;
-    dialogueDiv.append(groggDialogue, playerResponse);
+    initialSelect.append(groggDialogue, playerResponse);
     playerResponse.addEventListener("click", function () {
-        dialogueDiv.innerHTML = '';
+        initialSelect.innerHTML = '';
         dialogueIteration++
         groggDialogue.textContent = introDialogue[dialogueIteration].grogg;
         playerResponse.textContent = introDialogue[dialogueIteration].player;
-        dialogueDiv.append(groggDialogue, playerResponse);
-        if (dialogueIteration > 9) {
+        initialSelect.append(groggDialogue, playerResponse);
+        if (dialogueIteration > 8) {
             letsGo();
             return;
         }
@@ -192,8 +189,6 @@ function letsGo() {
     playerResponse.textContent = ">Sure, a rest would be nice [RETURN TO GROGG'S HUT]"
 
     playerResponse.addEventListener("click", function () {
-        dialogueDiv.style.display = "none";
-        initialSelect.style.display = "flex";
         initialSelect.innerHTML = '';
         var adventureMsg = document.createElement("p");
         var letsgoBtn = document.createElement("button");
@@ -204,30 +199,10 @@ function letsGo() {
         letsgoBtn.addEventListener("click", function () {
             fightorRest();
         })
-        
+
         initialSelect.append(adventureMsg, letsgoBtn);
     })
 };
-
-function restUp(){ 
-    initialSelect.innerHTML = ''; 
-    var sleepyTime = document.createElement("p"); 
-    var sleepyBtn = document.createElement("button");
-    sleepyTime.textContent = "Grogg: oh, my! Back already, " + playernameArray.join('').toUpperCase() + "? Well, I suppose a rest is in order..."; 
-    sleepyBtn.textContent = ">Sleep for the night"; 
-    sleepyBtn.addEventListener("click", function(){ 
-        initialSelect.innerHTML = ''; 
-        var restMsg = document.createElement("p"); 
-        var backtoAdventure = document.createElement("button"); 
-        restMsg.textContent = "You spend another restful night in Grogg's hut and wake feeling a little stronger!"; 
-        backtoAdventure.textContent = ">Return to the bog"; 
-        backtoAdventure.addEventListener("click", function(){ 
-            fightorRest(); 
-        }); 
-        initialSelect.append(restMsg, backtoAdventure); 
-        // heal function placeholder 
-    });
- initialSelect.append(sleepyTime, sleepyBtn)};
 
 function fightorRest() {
     initialSelect.innerHTML = '';
@@ -242,33 +217,35 @@ function fightorRest() {
     fightBtn.addEventListener("click", function () {
         getRandomMonster(apiDndMon).then(fightMon => {
             initialSelect.innerHTML = '';
-
             initialSelect.style.display = "flex";
             initialSelect.style.flexDirection = "column";
-                       
+            initialSelect.className
+
             var monsterImageUrl = fightMon.image;
             console.log(monsterImageUrl);
-            
+
             var fightMonImage = document.createElement("div");
             fightMonImage.style.backgroundImage = `url(${monsterImageUrl})`;
             fightMonImage.style.backgroundSize = "cover";
-            fightMonImage.style.backgroundPosition = "center";
             fightMonImage.style.width = "50vw";
             fightMonImage.style.height = "50vh";
-            
-            console.log("Mama didn't raise a quitter");
-            
-            // var monHealthGUI =  document.createElement("div");
-            // monHealthGUI.id = "hp-bar";
-            // monHealthGUI.setAttribute("data-value", "1");
-            // monHealthGUI.classList.add("rpgui-progress", "red");
+            fightMonImage.style.backgroundPosition = "center";
 
+            console.log("Mama didn't raise a quitter");
+
+            var monHealthGUI = document.createElement("div");
+            monHealthGUI.id = "hp-bar";
+            monHealthGUI.setAttribute("data-value", "1.0");
+            monHealthGUI.classList.add("rpgui-progress", "red");
+            monHealthGUI.innerHTML = `${fightMon.name}'s Health <div class=" rpgui-progress-track"><div class=" rpgui-progress-fill red" style="left: 0px; width: 100%;"></div></div><div class=" rpgui-progress-left-edge"></div><div class=" rpgui-progress-right-edge"></div>`;
+
+            initialSelect.appendChild(monHealthGUI);
             initialSelect.appendChild(fightMonImage);
-            
+
             var combatBox = document.createElement("div");
             combatBox.className = "rpgui-container framed-golden-2";
-            combatBox.style.width = "600px";
-            combatBox.style.height = "100px";
+            combatBox.style.width = "63vw";
+            combatBox.style.height = "18vh";
 
             var atkBox = document.createElement("button");
             var atkBoxIcon = document.createElement("div");
@@ -278,7 +255,7 @@ function fightorRest() {
             atkBox.style.height = "fit-content";
 
             atkBoxIcon.classList.add("rpgui-icon", "sword");
-            
+
             atkBox.appendChild(atkBoxIcon);
             atkBox.appendChild(document.createTextNode("Attack"))
             atkBox.addEventListener("click", function () {
@@ -287,19 +264,19 @@ function fightorRest() {
             });
             combatBox.appendChild(atkBox);
             document.querySelector('.rpgui-container').appendChild(combatBox);
- 
+
         });
     });
     restBtn.textContent = ">Flee and rest--I need to heal."
     restBtn.className = "fightorrestBtn";
     restBtn.addEventListener("click", function () {
         console.log("Do I look like I wanna die rn?");
-        restUp();
+        // place for heal function
     })
     initialSelect.append(fightorrestPrompt, fightBtn, restBtn);
 };
 
-var angy = console.log(angy);
+
 
 
 // On adventure/fight button
@@ -320,24 +297,24 @@ encounter.style.background = `monsterImageUrl`;
 // need to add attack button
 var swordIcon = document.createElement("button");
 // swap button to div if we would like to use the icon for something else
-swordIcon.classList.add("rpgui-icon sword");
+swordIcon.classList.add("rpgui-icon", "sword");
 document.body.appendChild(swordIcon);
 
 var swordIcon = document.createElement("div");
 // maybe button for running away?
-swordIcon.classList.add("rpgui-icon shield");
+swordIcon.classList.add("rpgui-icon", "shield");
 document.body.appendChild(swordIcon);
 
 var swordIcon = document.createElement("div");
-swordIcon.classList.add("rpgui-icon exclamation");
+swordIcon.classList.add("rpgui-icon", "exclamation");
 document.body.appendChild(swordIcon);
 
-var healthBar = document.createElement("div");
-healthBar.id = "hp-bar";
-healthBar.setAttribute("data-value", $(healthBarVal));
-healthBar.classList.add("rpgui-progress red");
-document.body.appendChild(healthBar);
-// var healthBarVal = fightMon current health / `fightMon.health`;
+// var healthBar = document.createElement("div");
+// healthBar.id = "hp-bar";
+// healthBar.setAttribute("data-value", $(healthBarVal));
+// healthBar.classList.add("rpgui-progress", "red");
+// document.body.appendChild(healthBar);
+// // var healthBarVal = fightMon current health / `fightMon.health`;
 
 // one day we can add a new skill button
 

@@ -1,74 +1,74 @@
 /*paper effect*/
-#page{
-  background-image: url("./assets/Images/parchment.jpg");
+.page{
+    background-image: url("./assets/Images/parchment.jpg");
 }
 
 #paper {
-  padding: 50px;
+    padding: 50px;
 }
 
 .rpgui-content {
-  display: flex; 
-}
-
+    display: inline-block; 
+  }
+  
 .rpgui-container {
-  width: 70%;
-  justify-content: center;
+    width: 70%;
+    justify-content: center;
+    position: relative;
 }
 
 #startButton {
-  width: 100%;
+    width: 100%;
 }
 
 .sidebar {
-width: 100%;
+  display: flex;
+  position: absolute;
 }
 
 #startGame{
-display: flex;
-flex-flow: row wrap;
-position: relative;
-max-height: min-content;
-justify-content: center;
-margin: 20px;
-width: 100%;
-}
-
-#initial-select {
-display: flex;
-justify-content: center;
-flex-flow: row wrap;
-}
-
-#dialogue {
-display: none;
-flex-flow: column wrap;
-}
-
-.dialogueBox, .dialogueBtn {
-max-width: 500px;
-flex-flow: row wrap;
-}
-
-.fightorrestBtn {
-display: block;
-}
-
-#startButton:hover {
-  animation: tilt-n-move-shaking 0.25s infinite;
-}
-
-.spotify{ 
   display: flex;
   flex-flow: row wrap;
   position: relative;
+  max-height: min-content;
   justify-content: center;
-  margin: 25px; 
+  margin: 20px;
+  width: 100%;
+}
+
+
+.dialogueBox {
+  max-width: 500px;
+  flex-flow: row wrap;
+}
+
+.dialogueBtn {
+  display: flex;
+  flex-flow: row wrap;
+  max-width: 500px;
+}
+
+.fightorrestBtn {
+  display: block;
+}
+
+#startButton:hover {
+    animation: tilt-n-move-shaking 0.25s infinite;
+}
+
+
+
+.spotify{ 
+    display: flex;
+    flex-flow: row wrap;
+    position: relative;
+    justify-content: center;
+    margin: 25px; 
 }
 @keyframes tilt-n-move-shaking {
-  0% { transform: translate(0, 0) rotate(0deg); }
-  25% { transform: translate(5px, 5px) rotate(5deg); }
-  50% { transform: translate(0, 0) rotate(0eg); }
-  75% { transform: translate(-5px, 5px) rotate(-5deg); }
-  100% { transform: translate(0, 0) rotate(0deg); }
-}
+    0% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(5px, 5px) rotate(5deg); }
+    50% { transform: translate(0, 0) rotate(0eg); }
+    75% { transform: translate(-5px, 5px) rotate(-5deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+  }
