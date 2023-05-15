@@ -36,6 +36,16 @@
   width: 100%;
 }
 
+#initial-select {
+  display: flex;
+  justify-content: center;
+  flex-flow: row wrap;
+}
+
+#dialogue {
+  display: none;
+  flex-flow: column wrap;
+}
 
 .dialogueBox {
   max-width: 500px;
