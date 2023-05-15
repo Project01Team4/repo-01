@@ -225,11 +225,12 @@ function fightorRest() {
             var monsterImageUrl = fightMon.image;
             console.log(monsterImageUrl);
             
-            var fightMonInfo = document.createElement("div");
-            fightMonInfo.style.backgroundImage = `url(${monsterImageUrl})`;
-            fightMonInfo.style.backgroundSize = "cover";
-            fightMonInfo.style.width = "50vw";
-            fightMonInfo.style.height = "50vh";
+            var fightMonImage = document.createElement("div");
+            fightMonImage.style.backgroundImage = `url(${monsterImageUrl})`;
+            fightMonImage.style.backgroundSize = "cover";
+            fightMonImage.style.backgroundPosition = "center";
+            fightMonImage.style.width = "50vw";
+            fightMonImage.style.height = "50vh";
             
             console.log("Mama didn't raise a quitter");
             
@@ -238,7 +239,7 @@ function fightorRest() {
             // monHealthGUI.setAttribute("data-value", "1");
             // monHealthGUI.classList.add("rpgui-progress", "red");
 
-            initialSelect.appendChild(fightMonInfo);
+            initialSelect.appendChild(fightMonImage);
             
             var combatBox = document.createElement("div");
             combatBox.className = "rpgui-container framed-golden-2";
