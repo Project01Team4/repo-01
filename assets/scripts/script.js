@@ -54,6 +54,7 @@ var startBtn = document.getElementById("startButton");
 
 var groggDialogue = document.createElement("p");
 groggDialogue.className = "dialogueBox";
+var dialogueDiv = document.getElementById("dialogue");
 var playerResponse = document.createElement("button");
 playerResponse.className = "dialogueBtn";
 
@@ -168,17 +169,18 @@ function gameIntro() {
             player: ''
         }
     ];
-    initialSelect.innerHTML = '';
+    initialSelect.style.display = "none";
+    dialogueDiv.style.display = "flex";
     groggDialogue.textContent = introDialogue[dialogueIteration].grogg;
     playerResponse.textContent = introDialogue[dialogueIteration].player;
-    initialSelect.append(groggDialogue, playerResponse);
+    dialogueDiv.append(groggDialogue, playerResponse);
     playerResponse.addEventListener("click", function () {
-        initialSelect.innerHTML = '';
+        dialogueDiv.innerHTML = '';
         dialogueIteration++
         groggDialogue.textContent = introDialogue[dialogueIteration].grogg;
         playerResponse.textContent = introDialogue[dialogueIteration].player;
-        initialSelect.append(groggDialogue, playerResponse);
-        if (dialogueIteration > 8) {
+        dialogueDiv.append(groggDialogue, playerResponse);
+        if (dialogueIteration > 9) {
             letsGo();
             return;
         }
@@ -190,6 +192,8 @@ function letsGo() {
     playerResponse.textContent = ">Sure, a rest would be nice [RETURN TO GROGG'S HUT]"
 
     playerResponse.addEventListener("click", function () {
+        dialogueDiv.style.display = "none";
+        initialSelect.style.display = "flex";
         initialSelect.innerHTML = '';
         var adventureMsg = document.createElement("p");
         var letsgoBtn = document.createElement("button");
@@ -204,6 +208,26 @@ function letsGo() {
         initialSelect.append(adventureMsg, letsgoBtn);
     })
 };
+
+function restUp(){ 
+    initialSelect.innerHTML = ''; 
+    var sleepyTime = document.createElement("p"); 
+    var sleepyBtn = document.createElement("button");
+    sleepyTime.textContent = "Grogg: oh, my! Back already, " + playernameArray.join('').toUpperCase() + "? Well, I suppose a rest is in order..."; 
+    sleepyBtn.textContent = ">Sleep for the night"; 
+    sleepyBtn.addEventListener("click", function(){ 
+        initialSelect.innerHTML = ''; 
+        var restMsg = document.createElement("p"); 
+        var backtoAdventure = document.createElement("button"); 
+        restMsg.textContent = "You spend another restful night in Grogg's hut and wake feeling a little stronger!"; 
+        backtoAdventure.textContent = ">Return to the bog"; 
+        backtoAdventure.addEventListener("click", function(){ 
+            fightorRest(); 
+        }); 
+        initialSelect.append(restMsg, backtoAdventure); 
+        // heal function placeholder 
+    });
+ initialSelect.append(sleepyTime, sleepyBtn)};
 
 function fightorRest() {
     initialSelect.innerHTML = '';
@@ -270,7 +294,7 @@ function fightorRest() {
     restBtn.className = "fightorrestBtn";
     restBtn.addEventListener("click", function () {
         console.log("Do I look like I wanna die rn?");
-        // place for heal function
+        restUp();
     })
     initialSelect.append(fightorrestPrompt, fightBtn, restBtn);
 };
