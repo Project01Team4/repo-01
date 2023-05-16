@@ -142,6 +142,7 @@ inside your html file.
   white-space: nowrap;
   display: block;
   content: "";
+  height: 100%;
   width: 34px;
   height: 110%;
   background: transparent url("img/button-golden-right.png") no-repeat left center;
