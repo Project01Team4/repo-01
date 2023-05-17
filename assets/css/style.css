@@ -77,13 +77,18 @@ body {
   width: 100%;
 }
 
-#initial-select, #healthmodal-sect {
+#initial-select, #healthmodal-sect, #monstermodal-sect {
   display: flex;
   align-items: center;
   flex-flow: column wrap;
 }
 
-#healthmodal-sect {
+#monstermodal-sect {
+  position: relative;
+  left: 20%;
+}
+
+#healthmodal-sect, #monstermodal-sect {
   display: none;
   flex-flow: row wrap;
   justify-self: center;
@@ -98,7 +103,7 @@ body {
   cursor: pointer;
 }
 
-#name-modal, #health-modal {
+#name-modal, #health-modal, #monster-modal {
   display: none;
   position: fixed;
   z-index: 1; 
@@ -114,23 +119,19 @@ body {
   padding-left: 10px;
 }
 
-#closeBtn, #closeBtn-health {
+#closeBtn-name, #closeBtn-health {
   color: #aaa;
   max-width: fit-content;
   font-size: 12px;
   font-weight: bold;
 }
 
-#closeBtn:hover,
-#closeBtn:focus {
+#closeBt-name:hover,
+#closeBtn-name:focus {
   color: black;
   text-decoration: none;
   cursor: pointer;
 }
-
-/* #closeBtn-health {
-  margin-top: 20px;
-} */
 
 #dialogue {
   display: none;

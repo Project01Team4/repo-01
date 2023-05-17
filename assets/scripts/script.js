@@ -10,6 +10,7 @@ var baseUrl = `https://www.dnd5eapi.co`;
 var apiDndMon = `https://www.dnd5eapi.co/api/monsters?challenge_rating=${difficulty}`;
 var playernameLS = JSON.parse(localStorage.getItem("player-name"));
 var playernameArray = [];
+var monstersfoughtArray = [];
 
 function getRandomMonster(apiDndMon) {
     return fetch(apiDndMon)
@@ -61,6 +62,7 @@ playerResponse.className = "dialogueBtn";
 
 var initialSelect = document.getElementById("initial-select");
 var healthbarSection = document.getElementById("healthmodal-sect");
+var monstersfoughtSection = document.getElementById("monstermodal-sect");
 
 // generates initial start screen using start button event listener
 function startPage() {
@@ -101,7 +103,7 @@ function beginAdventure() {
 // modal for if name is blank
 function nameModal() {
     var modal = document.getElementById("name-modal");
-    var close = document.getElementById("closeBtn");
+    var close = document.getElementById("closeBtn-name");
     modal.style.display = "block";
     close.addEventListener("click", function () {
         modal.style.display = "none";
@@ -127,7 +129,6 @@ function setName() {
         playernameArray.push(nameVal);
 
         if (nameVal === undefined || nameVal === "") {
-            // alert("Come now, every adventurer has a name. Make one up if you have to!");
             nameModal();
         } else {
             gameIntro();
@@ -162,6 +163,27 @@ function healthModal() {
     } else {
         return;
     }
+}
+
+function monsterModal() {
+    var monsterModal = document.getElementById("monster-modal");
+    var closeBtn = document.createElement("button");
+    closeBtn.textContent = "Close";
+    closeBtn.addEventListener("click", function () {
+        monsterModal.style.display = "none";
+    });
+    monsterModal.style.display = "block";
+    monsterModal.textContent = monstersfoughtArray.toString();
+    
+    window.onclick = function (event) {
+        if (event.target == monsterModal) {
+            monsterModal.style.display = "none";
+        }
+    };
+
+    if (monsterModal.childElementCount === 0){
+        monsterModal.appendChild(closeBtn);
+    };
 }
 
 // intro dialogue/setup
@@ -276,6 +298,11 @@ function letsGo() {
         healthbarSection.addEventListener("click", function () {
             healthModal();
         });
+        monstersfoughtSection.style.display = "block";
+        monstersfoughtSection.textContent = "Monsters Defeated";
+        monstersfoughtSection.addEventListener("click", function(){
+            monsterModal();
+        })
     });
 }
 
@@ -463,6 +490,7 @@ function fightClick() {
                 console.log(fightMon.health);
                 console.log(player.health);
                 fightMon.health = 0;
+                monstersfoughtArray.push(fightMon.name);
                 levelUp();
 
                 return true;
