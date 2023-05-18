@@ -1,15 +1,7 @@
-/*paper effect*/
-/* .paper {
-  width: fit-content;
-  height: fit-content;
-} */
-
 body {
-    /* background-image: url("./assets/Images/parchment.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-     */
+  background-image: url("/assets/Images/pexels-pixabay-235985.jpg");
 }
+
 
 
 /*dialogue section*/
@@ -94,7 +86,7 @@ p.typewriter {
     display: flex;
     justify-content: center;
     height: 80vh; 
-    background-color: rgb(133,76,48);
+    /* background-color: rgb(133,76,48); */
 
   }
   
@@ -165,19 +157,10 @@ p.typewriter {
   cursor: pointer;
 }
 
-#name-modal, #health-modal, #monster-modal{
+#name-modal, #health-modal, #monster-modal, #spotify-modal{
   display: none;
   position: fixed;
   z-index: 1; 
-  left: 10;
-  top: 10;
-  padding-top: 20px;
-  max-width: 500px;
-  max-height: fit-content;
-}
-#exampleModal{
-  position: relative;
-  z-index: 1500; 
   left: 10;
   top: 10;
   padding-top: 20px;
@@ -273,5 +256,6 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
-	background: black;
+	/* background: black; */
 }
+

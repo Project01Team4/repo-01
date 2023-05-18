@@ -199,6 +199,19 @@ function monsterModal() {
 
     
 }
+//Spotify Modal
+document.addEventListener("DOMContentLoaded", function() {
+    var ambianceButton = document.getElementById("music");
+    var spotifyModal = document.getElementById("spotify-modal");
+    ambianceButton.addEventListener("click", function() {
+      spotifyModal.style.display = spotifyModal.style.display === "none" ? "block" : "none";
+    });
+    var closeSpotifyButton = document.getElementById("closeBtn-spotify");
+    closeSpotifyButton.addEventListener("click", function() {
+      spotifyModal.style.display = "none";
+    });
+  });
+  
 
 // intro dialogue/setup
 function gameIntro() {
