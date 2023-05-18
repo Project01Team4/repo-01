@@ -474,7 +474,7 @@ function fightClick() {
             initialSelect.innerHTML = "";
             combatBox.style.display = "none";
             var runDialog = document.createElement("p");
-            runDialog.textContent = "You run as far away from the monster as your leg can take you until you are safe. When you look up you are back at Grogg's."
+            runDialog.textContent = "You run as far away from the monster as your legs can take you until you are safe. When you look up, you are back at Grogg's."
            
             var runContinue = document.createElement("button");
             runContinue.textContent = "Continue"
