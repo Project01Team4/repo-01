@@ -55,6 +55,7 @@ function getRandomMonster(apiDndMon) {
 
 var dialogueIteration = 0;
 
+var background = document.getElementById("body");
 var startBtn = document.getElementById("startButton");
 var namePrompt = document.getElementById("name-alert");
 var groggDialogue = document.createElement("p");
@@ -368,6 +369,8 @@ function restUp() {
 // prompts user to fight or rest
 function fightorRest() {
     initialSelect.innerHTML = "";
+    var playerLS = JSON.stringify(player);
+    localStorage.setItem('playerData', playerLS);
     var fightorrestPrompt = document.createElement("p");
     var fightBtn = document.createElement("button");
     var restBtn = document.createElement("button");
@@ -472,6 +475,8 @@ function fightClick() {
         runBox.addEventListener("click", function () {
             console.log("you ran!");
             initialSelect.innerHTML = "";
+            monstersfoughtSection.style.display = "block";
+            healthbarSection.style.display = "block";
             combatBox.style.display = "none";
             var runDialog = document.createElement("p");
             runDialog.textContent = "You run as far away from the monster as your legs can take you until you are safe. When you look up, you are back at Grogg's."
@@ -515,9 +520,7 @@ function fightClick() {
 // add modal for "fightmon.name does fightmon.strength damage to player.name"
 // add css for doom damage
 
-                if(player.level === 11){
-                    window.location.href = "./winscreen.html";
-                } else if (player.health <= 0) {
+                if (player.health <= 0) {
                     console.log(fightMon.health);
                     console.log(player.health);
                     player.health = 0;
@@ -547,7 +550,6 @@ function levelUp() {
     var winScreen = document.createElement("div");
     winScreen.className = "text-light";
     winScreen.innerHTML = `You have defeated the monster!<br>You level up!<br>${player.level} => ${parseInt(player.level) + 1}<br>Choose an option:`;
-  
 
     var healthOption = document.createElement("button");
     healthOption.textContent = "Raise Health";
@@ -555,8 +557,12 @@ function levelUp() {
     healthOption.addEventListener("click", function () {
         var healthIncrease = 3;
         player.originalHealth = parseInt(player.originalHealth) + healthIncrease;
-        player.gealth = parseInt(player.health) + healthIncrease;
+        player.health = parseInt(player.health) + healthIncrease;
         player.level = parseInt(player.level) + 1;
+        if (player.level >= 15){
+            window.location.replace('./winscreen.html')
+            return;
+        }
         console.log("health clicked");
         // Return to the screen with fight or rest
         toDo();
@@ -589,6 +595,8 @@ function levelUp() {
 
 function toDo() {
     initialSelect.innerHTML = "";
+    var playerLS = JSON.stringify(player);
+    localStorage.setItem('playerData', playerLS);
     var whatNow = document.createElement("p");
     whatNow.textContent = "What would you like to do now?"
     var fightBtn = document.createElement("button");
@@ -596,7 +604,7 @@ function toDo() {
     fightBtn.addEventListener("click", fightClick);
     var restBtn = document.createElement("button");
     restBtn.textContent = ">Let's get some rest."
-    restBtn.addEventListener("click", restUp)
+    restBtn.addEventListener("click", restUp);
     initialSelect.append(whatNow, fightBtn, restBtn);
 };
 

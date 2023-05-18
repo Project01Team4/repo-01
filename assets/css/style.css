@@ -164,6 +164,11 @@ p.typewriter {
   max-height: fit-content;
 }
 
+#monster-modal{
+  overflow-y: auto;
+  max-height: 300px;
+}
+
 #health-modal {
   color: white;
   padding-left: 10px;
@@ -174,6 +179,11 @@ p.typewriter {
   max-width: fit-content;
   font-size: 12px;
   font-weight: bold;
+}
+
+.closeBtn {
+  position: sticky;
+  top: 0;
 }
 
 #closeBt-name:hover,
@@ -251,7 +261,6 @@ p.typewriter {
 
   #deathbg{
     display: flex;
-    margin-top: 20%;
   }
 
 
