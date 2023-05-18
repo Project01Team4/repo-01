@@ -1,5 +1,6 @@
-body {
-  background-image: url("/assets/Images/parchment-bg.png");
+.rpgui-content {
+  background-color: 
+  #4c4c4c;
 }
 
 
@@ -7,7 +8,8 @@ body {
 /*dialogue section*/
 #dialogue button {
   margin: 0 auto; 
-  letter-spacing: .05em; 
+  letter-spacing: .05em;
+
 }
 
 @keyframes grow {
@@ -99,6 +101,9 @@ p.typewriter {
   height: 50%;
 }
 
+#paper h1 {
+  background-color: transparent;
+}
 #startButton {
     width: 50%;
 }
