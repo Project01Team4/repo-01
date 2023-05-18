@@ -1,53 +1,101 @@
 /*paper effect*/
+/* .paper {
+  width: fit-content;
+  height: fit-content;
+} */
 
 body {
-    background-image: url("./assets/Images/parchment.jpg");
+    /* background-image: url("./assets/Images/parchment.jpg");
     background-size: cover;
     background-repeat: no-repeat;
-  
+     */
 }
 
 
-
+/*dialogue section*/
 #dialogue button {
-  overflow: hidden; /* Ensures the content is not revealed until the animation */
-  border-right: .15em solid orange; /* The typwriter cursor */
-  white-space: nowrap; 
-  margin: 0 auto; /*Gives that scrolling effect as the typing happens */
-  letter-spacing: .05em; /* Adjust as needed */
-  animation: 
-    typing 3.5s steps(40, end),
-    blink-caret .75s step-end infinite;
-}
-#dialogue p {
-  overflow: hidden; /* Ensures the content is not revealed until the animation */
-  border-right: .15em solid orange; /* The typwriter cursor */
-  white-space: nowrap; 
-  margin: 0 auto; /*Gives that scrolling effect as the typing happens */
-  letter-spacing: .05em; /* Adjust as needed */
-  animation: 
-    typing 3.5s steps(40, end),
-    blink-caret .75s step-end infinite;
+  margin: 0 auto; 
+  letter-spacing: .05em; 
 }
 
-@keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
+@keyframes grow {
+  0% { max-height: var(--lineHeight); }
+  100% { max-height: calc(var(--lineHeight) * var(--lines)); }
 }
 
-/* The typewriter cursor effect */
-@keyframes blink-caret {
-  from, to { border-color: transparent }
-  50% { border-color: orange; }
+.typewriter {
+  animation: grow var(--time) steps(var(--lines));
+  animation-fill-mode: forwards;
+}
+
+p.typewriter {
+  width: 100%;
+  background: transparent;
+}
+
+
+@keyframes carriageReturn {
+  0% { top: 0; }
+  100% { top: calc(var(--lineHeight) * var(--lines)); }
+}
+
+@keyframes type {
+  0% { width: 100%; }
+  100% { width: 0%; }
+}
+
+@keyframes caret {
+  0% { color: #4e4a4e; }
+  100% { color: black; }
+}
+
+.keyframes::before {
+  /* ... */
+  animation: 
+    type var(--timePerLine) linear infinite, 
+    carriageReturn var(--time) steps(var(--lines)) var(--lines),
+    caret 0.5s steps(2) infinite;
+}
+
+.typewriter {
+  --bgColor: white;
+  --lines: 500;
+  --lineHeight: 1.5rem;
+  --timePerLine: 4s;
+  --widthCh: 22;
+  --width: calc(var(--widthCh) * 1ch);
+  --time: calc(var(--lines) * var(--timePerLine));
+  animation: grow var(--time) steps(var(--lines));
+  animation-fill-mode: forwards;
+  background: #4e4a4e;  
+  line-height: var(--lineHeight);
+  max-height: var(--lineHeight);
+  overflow: hidden;
+  position: relative;
+  width: var(--width);
+}
+
+.typewriter::before {
+  content: "";
+  animation: 
+    type var(--timePerLine) linear infinite, 
+    carriageReturn var(--time) steps(var(--lines)) var(--lines),
+    caret 0.5s steps(2) infinite;
+  background: #4e4a4e;
+  border-left: 2px solid;
+  bottom: 0;
+  height: 2rem;
+  position: absolute;
+  right: 0;
+  width: 100%;
 }
 
 .rpgui-content {
     display: flex;
     justify-content: center;
-    /* align-items: center; */
-    height: 100vh;
-    /* display: inline-block; */
-    
+    height: 80vh; 
+    background-color: rgb(133,76,48);
+
   }
   
 .rpgui-container {
@@ -56,8 +104,12 @@ body {
     position: relative;
 }
 
+.framed-golden {
+  height: 40%;
+}
+
 #startButton {
-    width: 100%;
+    width: 50%;
 }
 
 .sidebar {
@@ -73,9 +125,19 @@ body {
   position: relative;
   max-height: min-content;
   justify-content: center;
-  margin: 20px;
   width: 100%;
+  /* top: 20%; */
 }
+
+/* #paper h1 {
+  margin-top: 200px;
+  font-size: 25px;
+}
+
+#paper {
+  height: -webkit-fill-available;
+} */
+
 
 #initial-select, #healthmodal-sect, #monstermodal-sect {
   display: flex;
@@ -85,7 +147,7 @@ body {
 
 #monstermodal-sect {
   position: relative;
-  left: 20%;
+  left: 50%;
 }
 
 #healthmodal-sect, #monstermodal-sect {
@@ -103,10 +165,19 @@ body {
   cursor: pointer;
 }
 
-#name-modal, #health-modal, #monster-modal {
+#name-modal, #health-modal, #monster-modal{
   display: none;
   position: fixed;
   z-index: 1; 
+  left: 10;
+  top: 10;
+  padding-top: 20px;
+  max-width: 500px;
+  max-height: fit-content;
+}
+#exampleModal{
+  position: relative;
+  z-index: 1500; 
   left: 10;
   top: 10;
   padding-top: 20px;
@@ -166,3 +237,41 @@ body {
     75% { transform: translate(-5px, 5px) rotate(-5deg); }
     100% { transform: translate(0, 0) rotate(0deg); }
   }
+
+  #deathscreen {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    min-height: fit-content;
+    padding: 30px;
+  }
+
+  #deathscreen h1 {
+    font-size: 25px;
+  }
+
+  #deathmsg {
+    display: flex;
+    max-width: fit-content;
+    font-size: 15px;
+  }
+
+
+ 
+
+
+
+  #deathbg{
+    display: flex;
+    margin-top: 20%;
+  }
+
+
+/* General page styling */
+html {
+	height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+	background: black;
+}
