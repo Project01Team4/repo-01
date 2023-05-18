@@ -85,6 +85,7 @@ function beginAdventure() {
     startBtn.style.display = "none";
     var goBack = document.createElement("button");
     goBack.textContent = ">Return to start";
+    goBack.className = "dialogueBtn";
     goBack.style.marginRight = "70px";
     goBack.addEventListener("click", function () {
         location.reload();
@@ -92,6 +93,7 @@ function beginAdventure() {
 
     var goAdventure = document.createElement("button");
     goAdventure.textContent = ">I'm ready to go!";
+    goAdventure.className = "dialogueBtn";
     goAdventure.addEventListener("click", function () {
         setName();
     });
@@ -125,13 +127,12 @@ function updatePlayerName(newName) {
 }
 
 
-
-
 // allows user to set name
 function setName() {
     initialSelect.innerHTML = "";
     var enterName = document.createElement("input", "text");
     enterName.setAttribute("placeholder", "Enter Your Name");
+    enterName.className = "nameBox";
     var submitName = document.createElement("button");
     submitName.textContent = ">Submit!";
     submitName.addEventListener("click", function () {
@@ -155,6 +156,7 @@ function healthModal() {
     var healthModal = document.getElementById("health-modal");
     var closeBtn = document.createElement("button");
     closeBtn.textContent = "Close";
+    closeBtn.className = "closeBtn"
     closeBtn.addEventListener("click", function () {
         healthModal.style.display = "none";
     });
@@ -163,7 +165,7 @@ function healthModal() {
     playerHealthBar.id = ("player", "hp-bar");
     playerHealthBar.setAttribute("data-value", (player.health / player.originalHealth).toString()
     );
-    playerHealthBar.classList.add("rpgui-progress", "green");
+    playerHealthBar.classList.add("rpgui-progress", "green", "healthbar-style");
     playerHealthBar.innerHTML = `Player's Health <div class=" rpgui-progress-track"><div class=" rpgui-progress-fill green" style="left: 0px; width: ${(player.health / player.originalHealth) * 100}%;"></div></div><div class=" rpgui-progress-left-edge"></div><div class=" rpgui-progress-right-edge"></div>`;
 
     healthModal.append(playerHealthBar, closeBtn);
@@ -180,6 +182,7 @@ function monsterModal() {
     var closeBtn = document.createElement("button");
     monsterModal.innerHTML = '';
     closeBtn.textContent = "Close";
+    closeBtn.className = "closeBtn"
     closeBtn.addEventListener("click", function () {
         monsterModal.style.display = "none";
     });
@@ -417,7 +420,7 @@ function fightClick() {
         initialSelect.appendChild(fightMonImage);
 
         combatBox = document.createElement("div");
-        combatBox.className = "rpgui-container framed-golden-2";
+        combatBox.className = "rpgui-container framed-golden-2 combatBox";
         combatBox.style.width = "91vw";
         combatBox.style.height = "fit-content";
         combatBox.style.display = "flex";
@@ -433,13 +436,14 @@ function fightClick() {
         var buttonContainer = document.createElement("div");
         buttonContainer.style.display = "flex";
         buttonContainer.style.flexDirection = "column";
+        buttonContainer.classList.add("buttonContainer")
         buttonContainer.style.width = "25%";
         buttonContainer.style.alignItems = "flex-end";
 
         var atkBox = document.createElement("button");
         var atkBoxIcon = document.createElement("div");
         atkBox.id = "atkbtn";
-        atkBox.classList.add("rpgui-container", "rpgui-framed-golden-2");
+        atkBox.classList.add("rpgui-container", "rpgui-framed-golden-2", "atkBox");
         atkBox.style.width = "fit-content";
         atkBox.style.height = "fit-content";
         atkBox.style.position = "relative";
@@ -456,7 +460,7 @@ function fightClick() {
         var runBox = document.createElement("button");
         var runBoxIcon = document.createElement("div");
         runBox.id = "runbtn";
-        runBox.classList.add("rpgui-container", "rpgui-framed-golden-2");
+        runBox.classList.add("rpgui-container", "rpgui-framed-golden-2", "runBox");
         runBox.style.width = "fit-content";
         runBox.style.height = "fit-content";
         runBox.style.position = "relative";

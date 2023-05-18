@@ -6,6 +6,7 @@ var playerstatsArray = [
 ]
 var winMsg = document.getElementById("winmsg");
 var celebrationBtn = document.createElement("button");
+celebrationBtn.classList.add("dialogueBtn")
 var winmsgText = document.createElement("p");
 var highscoreSec = document.getElementById("highscore");
 
@@ -13,6 +14,7 @@ function winStart(){
     var playerName = playerArray.name;
     celebrationBtn.textContent = ">Awesome, can I go home now?";
     winmsgText.textContent = "Grogg: well now, " + playerName.toUpperCase() + "! My bog has never looked quite so empty nor sounded quite so silent. I'd say your debt is more than clear!";
+    winMsg.classList.add("dialogueBox");
     celebrationBtn.addEventListener("click", function(){
         statsDisplay();
     })
@@ -30,6 +32,7 @@ function statsDisplay(){
     for (var i = 0; i < playerstatsArray.length; i++){
         var statFinal = document.createElement("p");
         statFinal.textContent = playerstatsArray[i];
+        statFinal.className = "statFinal";
         highscoreSec.append(statFinal);
     }
     if (highScore === 1){
