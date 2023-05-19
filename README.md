@@ -1,4 +1,4 @@
-# Soggy Groggy and the Wonderous Bog
+# Soggy Groggy and the Wondrous Bog
 Project 1 for Bootcamp
 
 ## User Story 
@@ -37,4 +37,4 @@ Project 1 for Bootcamp
 
 
 ## Link to Game 
-<a href="https://project01team4.github.io/repo-01/index.html">Soggy Grogg and the Wondrous Bog</a>
+<a href="https://project01team4.github.io/soggy-grogg-and-the-wondrous-bog/">Soggy Grogg and the Wondrous Bog</a>
