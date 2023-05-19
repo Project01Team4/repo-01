@@ -33,6 +33,7 @@ Project 1 for Bootcamp
 </ul>
 
 ## Game Preview 
+![image](https://github.com/Project01Team4/repo-01/assets/129316135/10d38f91-c4e0-4d6c-8cc0-7c776a6aedb3)
 
 
 ## Link to Game 
