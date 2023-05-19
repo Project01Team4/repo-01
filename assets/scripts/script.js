@@ -574,6 +574,10 @@ function levelUp() {
     damageOption.addEventListener("click", function () {
         player.damage = parseInt(player.damage) + 1;
         player.level = parseInt(player.level) + 1;
+        if (player.level >= 15){
+            window.location.replace('./winscreen.html')
+            return;
+        }
         console.log("damage clicked");
         toDo();
         // Return to the screen with fight or rest
