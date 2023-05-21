@@ -141,7 +141,7 @@ function setName() {
         localStorage.setItem("player-name", JSON.stringify(nameVal));
         playernameArray.push(nameVal);
         updatePlayerName(nameVal);
-        
+
         if (nameVal === undefined || nameVal === "") {
             nameModal();
         } else {
@@ -170,12 +170,12 @@ function healthModal() {
     playerHealthBar.innerHTML = `Player's Health <div class=" rpgui-progress-track"><div class=" rpgui-progress-fill green" style="left: 0px; width: ${(player.health / player.originalHealth) * 100}%;"></div></div><div class=" rpgui-progress-left-edge"></div><div class=" rpgui-progress-right-edge"></div>`;
 
     healthModal.append(playerHealthBar, closeBtn);
-    
+
     window.onclick = function (event) {
         if (event.target == healthModal) {
             healthModal.style.display = "none";
         }
-    };  
+    };
 };
 
 function monsterModal() {
@@ -189,33 +189,33 @@ function monsterModal() {
     });
     monsterModal.style.display = "block";
     monsterModal.appendChild(closeBtn);
-    for(var i = 0; i < monstersfoughtArray.length; i++){
+    for (var i = 0; i < monstersfoughtArray.length; i++) {
         var monsterName = document.createElement("P");
         monsterName.textContent = monstersfoughtArray[i];
         monsterModal.appendChild(monsterName);
     }
-    
+
     window.onclick = function (event) {
         if (event.target == monsterModal) {
             monsterModal.style.display = "none";
         }
     };
 
-    
+
 }
 //Spotify Modal
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     var ambianceButton = document.getElementById("music");
     var spotifyModal = document.getElementById("spotify-modal");
-    ambianceButton.addEventListener("click", function() {
-      spotifyModal.style.display = spotifyModal.style.display === "none" ? "block" : "none";
+    ambianceButton.addEventListener("click", function () {
+        spotifyModal.style.display = spotifyModal.style.display === "none" ? "block" : "none";
     });
     var closeSpotifyButton = document.getElementById("closeBtn-spotify");
-    closeSpotifyButton.addEventListener("click", function() {
-      spotifyModal.style.display = "none";
+    closeSpotifyButton.addEventListener("click", function () {
+        spotifyModal.style.display = "none";
     });
-  });
-  
+});
+
 
 // intro dialogue/setup
 function gameIntro() {
@@ -332,7 +332,7 @@ function letsGo() {
         });
         monstersfoughtSection.style.display = "block";
         monstersfoughtSection.textContent = "Monsters Defeated";
-        monstersfoughtSection.addEventListener("click", function(){
+        monstersfoughtSection.addEventListener("click", function () {
             monsterModal();
         })
     });
@@ -377,7 +377,7 @@ function fightorRest() {
     fightorrestPrompt.className = "dialogueBox";
     fightorrestPrompt.textContent =
         "Wandering through the bog, you encounter a Monster. What do you do?";
-        // will find out a way to have the fightmon.name appear later
+    // will find out a way to have the fightmon.name appear later
 
     fightBtn.textContent = ">Stay and fight--this will be easy!";
     fightBtn.className = "fightorrestBtn";
@@ -431,9 +431,9 @@ function fightClick() {
 
         var playerHealthBar = document.createElement("div");
         playerHealthBar.id = "player-hp-bar";
-        playerHealthBar.setAttribute("data-value", "1.0");
+        playerHealthBar.setAttribute("data-value", (player.health / player.originalHealth).toString());
         playerHealthBar.classList.add("rpgui-progress", "green");
-        playerHealthBar.innerHTML = `Player's Health <div class="rpgui-progress-track"><div class="rpgui-progress-fill green" style="left: 0px; width: 100%;"></div></div><div class="rpgui-progress-left-edge"></div><div class="rpgui-progress-right-edge"></div>`;
+        playerHealthBar.innerHTML = `Player's Health <div class=" rpgui-progress-track"><div class=" rpgui-progress-fill green" style="left: 0px; width: ${(player.health / player.originalHealth) * 100}%;"></div></div><div class=" rpgui-progress-left-edge"></div><div class=" rpgui-progress-right-edge"></div>`;
         playerHealthBar.style.width = "75%";
 
         var buttonContainer = document.createElement("div");
@@ -480,7 +480,7 @@ function fightClick() {
             combatBox.style.display = "none";
             var runDialog = document.createElement("p");
             runDialog.textContent = "You run as far away from the monster as your legs can take you until you are safe. When you look up, you are back at Grogg's."
-           
+
             var runContinue = document.createElement("button");
             runContinue.textContent = "Continue"
             runContinue.addEventListener("click", toDo)
@@ -504,9 +504,9 @@ function fightClick() {
             );
             monHealthGUI.querySelector(".rpgui-progress-fill").style.width = `${(fightMon.health / fightMon.originalHealth) * 100
                 }%`;
-// add div for "Player does player.strength damage to fightmon.name"
+            // add div for "Player does player.strength damage to fightmon.name"
 
-// add css for hitting somewhere inside initialselector
+            // add css for hitting somewhere inside initialselector
             if (fightMon.health > 0) {
                 player.health -= fightMon.damage;
                 playerHealthBar.setAttribute(
@@ -517,8 +517,8 @@ function fightClick() {
                     }%`;
                 console.log(fightMon.health);
                 console.log(player.health);
-// add modal for "fightmon.name does fightmon.strength damage to player.name"
-// add css for doom damage
+                // add modal for "fightmon.name does fightmon.strength damage to player.name"
+                // add css for doom damage
 
                 if (player.health <= 0) {
                     console.log(fightMon.health);
@@ -559,7 +559,7 @@ function levelUp() {
         player.originalHealth = parseInt(player.originalHealth) + healthIncrease;
         player.health = parseInt(player.health) + healthIncrease;
         player.level = parseInt(player.level) + 1;
-        if (player.level >= 15){
+        if (player.level >= 15) {
             window.location.replace('./winscreen.html')
             return;
         }
@@ -574,7 +574,7 @@ function levelUp() {
     damageOption.addEventListener("click", function () {
         player.damage = parseInt(player.damage) + 1;
         player.level = parseInt(player.level) + 1;
-        if (player.level >= 15){
+        if (player.level >= 15) {
             window.location.replace('./winscreen.html')
             return;
         }
@@ -582,7 +582,7 @@ function levelUp() {
         toDo();
         // Return to the screen with fight or rest
     });
-    
+
     healthbarSection.style.display = "block";
     healthbarSection.textContent = "View Health";
     healthbarSection.addEventListener("click", function () {
@@ -591,7 +591,7 @@ function levelUp() {
     });
     monstersfoughtSection.style.display = "block";
     monstersfoughtSection.textContent = "Monsters Defeated";
-    monstersfoughtSection.addEventListener("click", function(){
+    monstersfoughtSection.addEventListener("click", function () {
         monsterModal();
     })
     initialSelect.append(winScreen, healthOption, damageOption);
